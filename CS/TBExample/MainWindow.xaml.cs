@@ -1,22 +1,8 @@
 ﻿using DevExpress.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace TBExample
-{
+namespace TBExample {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -53,27 +39,33 @@ namespace TBExample
         }
     }
 
-    public class Item
+    public class Item : BindableBase
     {
         public Item()
         {
             Command = new DelegateCommand(CommandAction);
         }
+
+        protected string _Name;
         public string Name
         {
-            get;
-            set;
-        }
-        public string Group
-        {
-            get;
-            set;
+            get { return this._Name; }
+            set { this.SetProperty(ref this._Name, value, "Name"); }
         }
 
+        protected string _Group;
+        public string Group
+        {
+            get { return this._Group; }
+            set { this.SetProperty(ref this._Group, value, "Group"); }
+        }
+
+
+        protected ObservableCollection<Item> _Children;
         public ObservableCollection<Item> Children
         {
-            get;
-            set;
+            get { return this._Children; }
+            set { this.SetProperty(ref this._Children, value, "Children"); }
         }
         public bool IsHasChildren
         {
@@ -83,11 +75,14 @@ namespace TBExample
             }
         }
 
-        public ICommand Command
+
+        protected DelegateCommand _Command;
+        public DelegateCommand Command
         {
-            get;
-            set;
+            get { return this._Command; }
+            set { this.SetProperty(ref this._Command, value, "Command"); }
         }
+
         public void CommandAction()
         {
             MessageBox.Show(Name);
